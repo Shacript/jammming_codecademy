@@ -1,5 +1,5 @@
 const clientId = "ffabacac768a4224a47ba7b7c09bf3b5";
-const redirectUri = "http://sha_jamming.surge.sh";
+const redirectUri = "https://sha_jamming.surge.sh";
 
 let accessToken;
 
