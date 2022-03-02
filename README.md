@@ -1,14 +1,15 @@
 # Final React frontend ( Jammming ) practice project from Codecademy
 ## https://www.codecademy.com/learn/paths/build-web-apps-with-react
-<br>
-Create react that make spotify playlist for you . <br>
-Just Search , Add , Rename , Submit .<br>
-<br>
-This is project that use spotify api !<br>
-<br>
-Hosting frontend with SURGE<br>
+Create react that make spotify playlist for you .
+
+Just Search , Add , Rename , Submit .
+
+This is project that use spotify api !
+
+Hosting frontend with SURGE
+
 https://sha_jamming.surge.sh
-<br>
+
 ## To-Do Feature:
 - [ ] Include preview samples for each track
 - [ ] Only display songs not currently present in the playlist in the search results
