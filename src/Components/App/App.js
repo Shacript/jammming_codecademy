@@ -13,6 +13,7 @@ class App extends Component {
       searchResults: [],
       playlistName: "New Playlist",
       playlistTracks: [],
+      isSaving: false,
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -40,9 +41,14 @@ class App extends Component {
   }
   savePlaylist() {
     if (this.state.playlistTracks.length <= 0) return;
+    this.setState({ isSaving: true });
     const trackUris = this.state.playlistTracks.map((track) => track.uri);
     Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
-      this.setState({ playlistName: "New Playlist", playlistTracks: [] });
+      this.setState({
+        playlistName: "New Playlist",
+        playlistTracks: [],
+        isSaving: false,
+      });
     });
   }
   search(term) {
@@ -74,6 +80,7 @@ class App extends Component {
               updatePlaylistName={this.updatePlaylistName}
               onRemove={this.removeTrack}
               onSave={this.savePlaylist}
+              isSaving={this.state.isSaving}
             />
           </div>
         </div>
