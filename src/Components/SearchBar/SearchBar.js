@@ -5,15 +5,18 @@ export default class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      term: "",
+      term: localStorage.getItem("search_term") || "",
     };
     this.search = this.search.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
   }
   search() {
     this.props.onSearch(this.state.term);
+    this.setState({ term: "" });
+    localStorage.removeItem("search_term");
   }
   handleTermChange(e) {
+    localStorage.setItem("search_term",e.target.value);
     this.setState({ term: e.target.value });
   }
   render() {
