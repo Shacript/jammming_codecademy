@@ -10,7 +10,7 @@ Hosting frontend with SURGE
 
 https://sha_jamming.surge.sh
 
-## To-Do Feature:
+## To-Do Feature: (do without tutorial)
 - [ ] Include preview samples for each track
 - [ ] Only display songs not currently present in the playlist in the search results
 - [ ] Add a loading screen while playlist is saving
