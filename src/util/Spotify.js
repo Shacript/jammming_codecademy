@@ -1,5 +1,5 @@
 const clientId = "ffabacac768a4224a47ba7b7c09bf3b5";
-const redirectUri = "http://sha_jamming.surge.sh";
+const redirectUri = "http://localhost:3000";
 
 let accessToken;
 
@@ -32,13 +32,15 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
-        return jsonResponse.tracks.items.map((track) => ({
+        const results = jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,
           artist: track.artists[0].name,
           album: track.album.name,
           uri: track.uri,
+          preview_url: track.preview_url
         }));
+        return results
       });
   },
   savePlaylist(name, trackUris) {

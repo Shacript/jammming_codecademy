@@ -31,6 +31,11 @@ export default class Track extends Component {
           <p>
             {this.props.track.artist} | {this.props.track.album}
           </p>
+          {this.props.track.preview_url ? (
+            <audio controls muted>
+              <source src={this.props.track.preview_url} />
+            </audio>
+          ) : <p>No preview</p>}
         </div>
         {this.renderAction()}
       </div>
