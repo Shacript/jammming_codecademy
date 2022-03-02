@@ -1,20 +1,29 @@
 const clientId = "ffabacac768a4224a47ba7b7c09bf3b5";
 const redirectUri = "http://localhost:3000";
 
-let accessToken;
+let accessToken = localStorage.getItem("accessToken");
+let expiresAt = localStorage.getItem("expiresAt");
 
 const Spotify = {
   getAccessToken() {
+    if (expiresAt && expiresAt < Date.getTime()) {
+      accessToken = null;
+      expiresAt = null;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("expiresAt");
+    }
     if (accessToken) {
       return accessToken;
     }
+    
     const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
     if (accessTokenMatch && expiresInMatch) {
       accessToken = accessTokenMatch[1];
-      const expiresIn = Number(expiresInMatch[1]);
-      window.setTimeout(() => (accessToken = ""), expiresIn * 1000);
+      localStorage.setItem("accessToken", accessToken);
+      const expiresAt = new Date().getTime() + Number(expiresInMatch[1]) * 1000;
+      localStorage.setItem("expiresAt", expiresAt);
       window.history.pushState("Access Token", null, "/");
       return accessToken;
     } else {
