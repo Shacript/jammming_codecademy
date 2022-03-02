@@ -4,32 +4,32 @@ const redirectUri = "http://sha_jamming.surge.sh";
 let accessToken = localStorage.getItem("accessToken");
 let expiresAt = localStorage.getItem("expiresAt");
 
+if (expiresAt && expiresAt < new Date().getTime()) {
+  accessToken = null;
+  expiresAt = null;
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("expiresAt");
+}
+
+const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+
+if(accessTokenMatch && expiresInMatch){
+  accessToken = accessTokenMatch[1];
+  localStorage.setItem("accessToken", accessToken);
+  const expiresAt = new Date().getTime() + Number(expiresInMatch[1]) * 1000;
+  localStorage.setItem("expiresAt", expiresAt);
+  window.history.pushState("Access Token", null, "/");
+}
+
 const Spotify = {
   getAccessToken() {
-    if (expiresAt && expiresAt < new Date().getTime()) {
-      accessToken = null;
-      expiresAt = null;
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("expiresAt");
-    }
     if (accessToken) {
       return accessToken;
     }
-    
-    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
-    const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
-    if (accessTokenMatch && expiresInMatch) {
-      accessToken = accessTokenMatch[1];
-      localStorage.setItem("accessToken", accessToken);
-      const expiresAt = new Date().getTime() + Number(expiresInMatch[1]) * 1000;
-      localStorage.setItem("expiresAt", expiresAt);
-      window.history.pushState("Access Token", null, "/");
-      return accessToken;
-    } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
-      window.location = accessUrl;
-    }
+    const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
+    window.location = accessUrl;
   },
   search(term) {
     const accessToken = Spotify.getAccessToken();
