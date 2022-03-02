@@ -47,7 +47,12 @@ class App extends Component {
   }
   search(term) {
     Spotify.search(term).then((searchResults) => {
-      this.setState({ searchResults: searchResults });
+      const notInPlaylist = searchResults.filter((searchResult) => {
+        return !this.state.playlistTracks.find(
+          ({ id }) => searchResult.id === id
+        );
+      });
+      this.setState({ searchResults: notInPlaylist });
     });
   }
   render() {
