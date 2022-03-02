@@ -11,8 +11,8 @@ class App extends Component {
     super(props);
     this.state = {
       searchResults: [],
-      playlistName: "New Playlist",
-      playlistTracks: [],
+      playlistName: localStorage.getItem("playlistName") || "New Playlist",
+      playlistTracks: JSON.parse(localStorage.getItem("playlistTracks")) || [],
       isSaving: false,
     };
     this.addTrack = this.addTrack.bind(this);
@@ -26,17 +26,22 @@ class App extends Component {
     if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
       return;
     }
-
     tracks.push(track);
+    localStorage.setItem("playlistTracks", JSON.stringify(tracks));
     this.setState({ playlistTracks: tracks });
   }
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
+    let tracksFilter = tracks.filter(
+      (savedTrack) => savedTrack.id !== track.id
+    );
+    localStorage.setItem("playlistTracks", JSON.stringify(tracksFilter));
     this.setState({
-      playlistTracks: tracks.filter((savedTrack) => savedTrack.id !== track.id),
+      playlistTracks: tracksFilter,
     });
   }
   updatePlaylistName(name) {
+    localStorage.setItem("playlistName", name);
     this.setState({ playlistName: name });
   }
   savePlaylist() {
@@ -44,6 +49,8 @@ class App extends Component {
     this.setState({ isSaving: true });
     const trackUris = this.state.playlistTracks.map((track) => track.uri);
     Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+      localStorage.setItem("playlistName", "New Playlist");
+      localStorage.setItem("playlistTracks", JSON.stringify([]));
       this.setState({
         playlistName: "New Playlist",
         playlistTracks: [],

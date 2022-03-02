@@ -12,8 +12,6 @@ export default class SearchBar extends Component {
   }
   search() {
     this.props.onSearch(this.state.term);
-    this.setState({ term: "" });
-    localStorage.removeItem("search_term");
   }
   handleTermChange(e) {
     localStorage.setItem("search_term",e.target.value);
@@ -25,6 +23,7 @@ export default class SearchBar extends Component {
         <input
           placeholder="Enter A Song, Album, or Artist"
           onChange={this.handleTermChange}
+          value={this.state.term}
         />
         <button className="SearchButton" onClick={this.search}>
           SEARCH

@@ -6,7 +6,7 @@ let expiresAt = localStorage.getItem("expiresAt");
 
 const Spotify = {
   getAccessToken() {
-    if (expiresAt && expiresAt < Date.getTime()) {
+    if (expiresAt && expiresAt < new Date().getTime()) {
       accessToken = null;
       expiresAt = null;
       localStorage.removeItem("accessToken");
