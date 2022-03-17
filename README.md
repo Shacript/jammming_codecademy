@@ -7,8 +7,10 @@ Just Search , Add , Rename , Submit .
 This is project that use spotify api !
 
 Hosting frontend with SURGE
+### Demo https://sha_jamming.surge.sh
+Currently Spotify API is still in Development mode . There might can't use on Demo
 
-https://sha_jamming.surge.sh
+But ! You guys can clone this project and change ClientId,RedirectURI (src/util/Spotify.js) to your Spotify API !
 
 ## To-Do Feature: (do without tutorial)
 - [x] Include preview samples for each track
